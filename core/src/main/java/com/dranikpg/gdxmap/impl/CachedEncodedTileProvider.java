@@ -18,7 +18,7 @@ import java.util.List;
  * Long encoding
  * Tile provider
  */
-public class CachedEncodedTileProvider implements TileProvider, TileHandlerConnection, Disposable {
+public class CachedEncodedTileProvider implements TileProvider, TileHandlerConnection {
 
     LongMap<MapTile> tm;
 

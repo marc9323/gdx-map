@@ -1,10 +1,11 @@
 package com.dranikpg.gdxmap.abstr;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Disposable;
 import com.dranikpg.gdxmap.MapHolder;
 import com.dranikpg.gdxmap.macro.MapTile;
 
-public interface TileProvider {
+public interface TileProvider extends Disposable {
 
     int tilesize();
 
@@ -28,5 +29,6 @@ public interface TileProvider {
 
     TextureRegion find(int level, int x, int y, int searchdepth, int load);
     TextureRegion find(int level, int x, int y, int xp, int yp, int steps, int depth);
+
 
 }

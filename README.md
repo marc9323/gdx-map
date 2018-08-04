@@ -37,23 +37,17 @@ The *InternetStrategy* is responsible for downloading tiles.
 The *PersistenceStrategy* is responsible for persisting downloaded tiles on some kind of storage and *ideally* not blowing up the users storage,
 and *MemoryPersistenceStrategy* should *ideally* take care of not blowing up the users RAM.
 
-The *LimitedBoundsEjectNetStrategy* is a Network strategy which has a controlled amount of worker threads based around a blocking queue.
-It tires to **prevent tiles which are not visible any more from loading**. This way after a long pan&zoom journey the strategy ejects tiles 
-left behind to focus instead on fetching the currently visible area.
+The *LimitedBoundsEjectNetStrategy* is a Network strategy which has a controlled amount of worker threads based around a blocking queue. It tires to **prevent tiles which are not visible any more from loading**. This way after a long pan&zoom journey the strategy ejects tiles left behind to focus instead on fetching the currently visible area.
 
-PS: Keeping the amount of worker thread limited is generally a good idea. After I configured a similar extension for google's tile
-server I almost instantly got blocked from google maps for 12 hours. I'm sorry I hadn't read the GTC :(
+PS: Keeping the amount of worker thread limited is generally a good idea. After I configured a similar extension for google's tile server I almost instantly got blocked from google maps for 12 hours. I'm sorry I hadn't read the GTC :(
 
-The *InstantWriteBytePersistence* is **just a utility** for a painless start. As you might have guessed it fails on filtering the 
-tiles to persist. It saves every downloaded tile. This is actually a good way of **blowing up the users storage** with a few thousand files.
-So either try clearing it regularly or ejecting obsolete tiles. 
+The *InstantWriteBytePersistence* is **just a utility** for a painless start. As you might have guessed it fails on filtering the tiles to persist. It saves every downloaded tile. This is actually a good way of **blowing up the users storage** with a few thousand files. So either try clearing it regularly or ejecting obsolete tiles. 
 
-At the moment there is no default *MemoryPersistenceStrategy* except the dummy one, which is a good way of blowing up the
-users RAM (at least freeing ram is a no-brainer for the operating system in contrast to the internal storage :) ).
-Each tile holds a texture, so keep in mind that **it needs to be disposed**. 
-One could inventing some clever gc based mechanism... but one of the libgdx founders told me that native resources should generally have a well defined life cycle. 
-So the most straightforward way would be finding tiles far apart from all MapHolders and disposing them. Note that the *CachedEncodedTileProvider* tries
-to abstract multithreaded and context based execution via the *MapExecutionProvider* interface.
+We can't precalculate the byte array size because most providers use the JPEG format, with sizes mostly ranging anywhere from 0.5 to 10kilobytes, so provided implementations allocate a new byte array for every implementation. But we also have some hidden guests that don't show up in the heap.
+Each tile holds a texture, so keep in mind that **it has to be disposed**. One could inventing some clever gc based mechanism... but one of the libgdx founders told me that native resources should generally have a well defined life cycle. 
+The *LimitedBoundsEjectMemoryPersistence* can be used to **dispose invisible tiles** when the underlaying map size reaches a given size. The implementation is inefficient with small sizes.
+
+Note that the *CachedEncodedTileProvider* tries to abstract multithreaded and context based execution via the *MapExecutionProvider* interface.
 
 Some more info might be found here [dranikpg home](http://www.dranikpg.com/blog/gdxmap.html)
 

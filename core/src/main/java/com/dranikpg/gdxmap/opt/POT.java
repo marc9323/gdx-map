@@ -1,4 +1,4 @@
-package com.dranikpg.gdxmap;
+package com.dranikpg.gdxmap.opt;
 
 public class POT {
 

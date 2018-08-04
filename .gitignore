@@ -3,6 +3,7 @@ lwjgl3
 
 ## Gradle
 .gradle
+gradle
 gradle-app.setting
 build/
 

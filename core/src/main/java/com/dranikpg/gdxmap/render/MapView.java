@@ -13,7 +13,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
 import com.dranikpg.gdxmap.GdxMapCodes;
 import com.dranikpg.gdxmap.MapHolder;
-import com.dranikpg.gdxmap.POT;
+import com.dranikpg.gdxmap.opt.POT;
 import com.dranikpg.gdxmap.abstr.TileRenderer;
 
 public class MapView implements TileRenderer, Disposable {
@@ -41,7 +41,7 @@ public class MapView implements TileRenderer, Disposable {
     }
 
     public MapView(MapHolder hd, int w, int h){
-        this(hd, new SpriteBatch(), w,h,true);
+        this(hd, new SpriteBatch(100), w,h,true);
     }
 
     private MapView(MapHolder hd, Batch b, int w, int h, boolean owns){
@@ -113,7 +113,7 @@ public class MapView implements TileRenderer, Disposable {
     }
 
     protected void levelchange(int dif) {
-        float sc = POT.of(dif);
+        float  sc = POT.of(dif);
         target.x *= sc;
         target.y *= sc;
     }

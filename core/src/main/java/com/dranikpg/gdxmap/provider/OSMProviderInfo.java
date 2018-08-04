@@ -1,6 +1,6 @@
 package com.dranikpg.gdxmap.provider;
 
-import com.dranikpg.gdxmap.POT;
+import com.dranikpg.gdxmap.opt.POT;
 import com.dranikpg.gdxmap.abstr.TileProviderInfo;
 import com.dranikpg.gdxmap.macro.MapTile;
 

@@ -1,10 +1,11 @@
 package com.dranikpg.gdxmap.impl;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.LongMap;
 import com.dranikpg.gdxmap.GdxMapCodes;
 import com.dranikpg.gdxmap.MapHolder;
-import com.dranikpg.gdxmap.POT;
+import com.dranikpg.gdxmap.opt.POT;
 import com.dranikpg.gdxmap.abstr.*;
 import com.dranikpg.gdxmap.macro.MapTile;
 
@@ -17,7 +18,7 @@ import java.util.List;
  * Long encoding
  * Tile provider
  */
-public class CachedEncodedTileProvider implements TileProvider, TileHandlerConnection {
+public class CachedEncodedTileProvider implements TileProvider, TileHandlerConnection, Disposable {
 
     LongMap<MapTile> tm;
 
@@ -185,5 +186,15 @@ public class CachedEncodedTileProvider implements TileProvider, TileHandlerConne
     @Override
     public TileProviderInfo THgetProviderInfo() {
         return info;
+    }
+
+    @Override
+    public LongMap<MapTile> THgetTileMap() {
+        return tm;
+    }
+
+    @Override
+    public void dispose() {
+        for(MapTile t: tm.values())t.dispose();
     }
 }

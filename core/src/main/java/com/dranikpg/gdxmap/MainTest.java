@@ -11,10 +11,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.dranikpg.gdxmap.abstr.MapExecutionProvider;
 import com.dranikpg.gdxmap.impl.CachedEncodedTileProvider;
-import com.dranikpg.gdxmap.strategy.DummyRamPersistence;
 import com.dranikpg.gdxmap.provider.OSMProviderInfo;
 import com.dranikpg.gdxmap.render.MapView;
 import com.dranikpg.gdxmap.strategy.InstantWriteBytePersistence;
+import com.dranikpg.gdxmap.strategy.LimitedBoundsEjectMemoryPersistence;
 import com.dranikpg.gdxmap.strategy.LimitedBoundsEjectNetStrategy;
 
 import java.util.Arrays;
@@ -45,19 +45,24 @@ public class MainTest extends ApplicationAdapter implements InputProcessor, MapE
         vp = new ScreenViewport(new OrthographicCamera());
 
         //create out MapHolder
+        /*
+            MapHolder::update expects the maximum fetch type, which can be found in GdxMapCodes.
+            Look into MapView for an example
+         */
         hd = new MapHolder();
+
 
         /* Main tile provider
            CachedEncodedTileProvider is a robust implementation ready to use
            LimitedBoundsEjectNetStrategy ejects tiles that are not visible any more and restricts the amount of download threads
-           DummyRamPersistence does nothing, supply your own to manage the tile dataset if ram gets low
+           LimitedBoundsEjectMemoryPersistence auto disposal when reaching given size
            InstantWriteBytePersistence writes everything it gets, you might want to eject some tiles so the folder wont blow up the fs
            OSMProviderInfo provider info based on OpenStreetMap
         */
         CachedEncodedTileProvider pv = new CachedEncodedTileProvider(
                 this,
                 new LimitedBoundsEjectNetStrategy(3),
-                new DummyRamPersistence(),
+                new LimitedBoundsEjectMemoryPersistence(500),
                 new InstantWriteBytePersistence(Gdx.files.external("tmp/gdxmap")),
                 new OSMProviderInfo()
         );

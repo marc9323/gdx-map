@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.dranikpg.gdxmap.abstr.TileProvider;
 import com.dranikpg.gdxmap.abstr.TileRenderer;
 import com.dranikpg.gdxmap.macro.MapTile;
+import com.dranikpg.gdxmap.opt.POT;
 
 public class MapHolder {
 

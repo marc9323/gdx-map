@@ -1,4 +1,4 @@
-## Tile map base for libgdx
+## Geographic tiled map base for libgdx
 
 The project is mainly based on a bunch of interfaces, covering tile download, memory and storage persistence, rendering and navigating.
 It contains a robust implementation of some aspects and some utilities, providing a ready to use map base.
@@ -14,8 +14,6 @@ Dynamic map load example:
 
 ![kek](http://www.dranikpg.com/img/gdxmap/dynamic_load.png)
 
-
-file:///home/vlad/Pictures/gdxmap/big.png
 
 ### General info
 The macro level building blocks are *MapTile*s. Each MapTile has a x/y position as well as a zoomlevel it belongs to.

@@ -45,7 +45,7 @@ The *InstantWriteBytePersistence* is **just a utility** for a painless start. As
 
 We can't precalculate the byte array size because most providers use the JPEG format, with sizes mostly ranging anywhere from 0.5 to 10kilobytes, so provided implementations allocate a new byte array for every implementation. But we also have some hidden guests that don't show up in the heap.
 Each tile holds a texture, so keep in mind that **it has to be disposed**. One could inventing some clever gc based mechanism... but one of the libgdx founders told me that native resources should generally have a well defined life cycle. 
-The *LimitedBoundsEjectMemoryPersistence* can be used to **dispose invisible tiles** when the underlaying map size reaches a given size. The implementation is inefficient with small sizes.
+The *LimitedBoundsEjectMemoryPersistence* can be used to **dispose invisible tiles** when the amount of cached tiles reaches a certain size. The implementation is inefficient with small sizes.
 
 Note that the *CachedEncodedTileProvider* tries to abstract multithreaded and context based execution via the *MapExecutionProvider* interface.
 

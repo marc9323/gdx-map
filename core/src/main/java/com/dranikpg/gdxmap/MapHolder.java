@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.dranikpg.gdxmap.abstr.TileProvider;
 import com.dranikpg.gdxmap.abstr.TileRenderer;
 import com.dranikpg.gdxmap.macro.MapTile;
@@ -111,9 +112,9 @@ public class MapHolder {
     /*
         Position access
      */
-    public boolean inBoundsWithTolerance(int x, int y, int gl,int dt,  int lt){
+    public boolean inBoundsWithTolerance(float x, float y, int gl,int dt,  int lt){
         if(Math.abs(level-gl) > lt)return false;
-        int sc = (int) POT.of(level-gl);
+        float sc =  POT.of(level-gl);
         x = x*sc;
         y = y*sc;
         y = pv.gridsize(level) - y;
@@ -130,28 +131,40 @@ public class MapHolder {
     public void getTilePos(Vector2 t){
         t.x = (int) cam.position.x/pv.tilesize();
         t.y = (int) cam.position.y/pv.tilesize();
+        t.y = pv.gridsize(level) - t.y;
     }
 
     public void getTilePoswBase(Vector2 t, int base){
-        int sc = (int) POT.of(base-level);
-        t.x = cam.position.x/pv.tilesize() * sc;
-        t.y = cam.position.y/pv.tilesize() * sc;
+        float sc =  POT.of(base-level)/cam.zoom;
+        t.x*=sc;
+        t.y*=sc;
+        t.x = cam.position.x/pv.tilesize();
+        t.y = cam.position.y/pv.tilesize() ;
     }
 
-    public void getPixelPos(Vector2 t){
-        t.set(cam.position.x,cam.position.y);
+    /*
+        WITH FLOATS
+     */
+    public void getPixelPos(Vector2 t, int z){
+        float sc = POT.of(level-z);
+        t.x *=pv.tilesize() * sc;
+        t.y *=pv.tilesize() * sc;
     }
 
-    public void getPixelPoswBase(Vector2 t, int base){
-        int sc = (int) POT.of(base-level);
-        t.set(cam.position.x,cam.position.y).scl(sc);
+    public void project(Vector2 v, Vector3 calc){
+        calc.set(v,0);
+        cam.project(calc,
+               0,0,cam.viewportWidth,cam.viewportHeight);
+
+        v.x = calc.x;
+        v.y = calc.y;
     }
 
 
     public double[] getGEO(){
         double[] d = new double[2];
-        int xt = (int) (cam.position.x / pv.tilesize());
-        int yt = (int) (cam.position.y / pv.tilesize());
+        float xt =  (cam.position.x / pv.tilesize());
+        float yt =  (cam.position.y / pv.tilesize());
         yt = pv.gridsize(level) - yt;
         GeoUtil.getLatLon(d,xt, yt,level);
         return d;

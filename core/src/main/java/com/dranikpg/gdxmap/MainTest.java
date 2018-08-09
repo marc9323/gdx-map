@@ -4,10 +4,14 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.dranikpg.gdxmap.abstr.MapExecutionProvider;
 import com.dranikpg.gdxmap.impl.CachedEncodedTileProvider;
@@ -28,6 +32,13 @@ public class MainTest extends ApplicationAdapter implements InputProcessor, MapE
 
     ScreenViewport vp;
     TextureRegion r;
+
+    Vector2 cd = new Vector2();
+    Vector2 cd2 = new Vector2();
+    Vector3 calc = new Vector3();
+
+
+    Texture t;
 
     @Override
     public void create() {
@@ -73,6 +84,18 @@ public class MainTest extends ApplicationAdapter implements InputProcessor, MapE
         */
         rd = new MapView(hd, b, 500, 500);
         Gdx.input.setInputProcessor(this);
+
+        /*
+         Fetch tile float coordinates for Athens
+         */
+        GeoUtil.getCoords(cd,37.983876,23.746900,5, hd.getGridSizeForLevel(5));
+
+        Pixmap tmpm = new Pixmap(10,10,Pixmap.Format.RGBA4444);
+        tmpm.setColor(Color.GOLDENROD);
+        tmpm.fill();
+        t = new Texture(tmpm);
+        tmpm.dispose();
+
     }
 
     @Override
@@ -81,9 +104,19 @@ public class MainTest extends ApplicationAdapter implements InputProcessor, MapE
 
         vp.apply();
 
+        // get pos(float tile coords) in pixels
+        hd.getPixelPos(cd2.set(cd),5);
+
+        //project to screen
+        hd.project(cd2,calc);
+
+        //System.out.println(cd2);
+
+
         b.setProjectionMatrix(vp.getCamera().combined);
         b.begin();
         b.draw(r,0,0,vp.getScreenWidth(),vp.getScreenHeight());
+        b.draw(t, cd2.x, cd2.y, 10,10);
         b.end();
     }
 
@@ -128,11 +161,10 @@ public class MainTest extends ApplicationAdapter implements InputProcessor, MapE
                 break;
             case Input.Keys.BACKSPACE:
                 Vector2 v = new Vector2();
-                GeoUtil.getCoords(v,7d,3d, 10, hd.getGridSizeForLevel(10));
+                GeoUtil.getTileCoords(v,7d,3d, 10, hd.getGridSizeForLevel(10));
                 rd.goal(v.x,v.y,10);
                 break;
             case Input.Keys.ENTER:
-                v = new Vector2();
                 double[] ar = hd.getGEO();
                 System.out.print(Arrays.toString(ar));
                 break;

@@ -136,9 +136,6 @@ public class MapView implements TileRenderer, Disposable {
         target.x = (x*1f*sc)*hd.getTileSize();
         target.y = (y*1f*sc)*hd.getTileSize();
         reached = false;
-        System.out.println("Hd was on level" + hd.level());
-        System.out.println("Goal to  " + x + " " + y + " " + level  + " pot " + sc);
-        System.out.println("Goal to " + target);
     }
 
     /*

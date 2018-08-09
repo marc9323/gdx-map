@@ -86,7 +86,7 @@ public class MainTest extends ApplicationAdapter implements InputProcessor, MapE
         Gdx.input.setInputProcessor(this);
 
         /*
-         Fetch tile float coordinates for Athens
+         Fetch tile float coordinates for Athens with tilezoom 5
          */
         GeoUtil.getCoords(cd,37.983876,23.746900,5, hd.getGridSizeForLevel(5));
 

@@ -61,7 +61,6 @@ public class LimitedBoundsEjectMemoryPersistence implements MemoryPersistenceStr
                         for(Texture t: tar)t.dispose();
                         tar.clear();
                         running = false;
-                        System.out.println("end: " + cn.THgetTileMap().size);
                     }
                 }
         );
@@ -71,7 +70,6 @@ public class LimitedBoundsEjectMemoryPersistence implements MemoryPersistenceStr
     @Override
     public void fetched(MapTile t, final TileHandlerConnection cn) {
         if(!running && cn.THgetTileMap().size > limit) {
-            System.out.println(cn.THgetTileMap().size);
             running = true;
             cn.THgetExecution().genericRun(
                     new Runnable() {

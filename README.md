@@ -3,8 +3,8 @@
 The project is mainly based on a bunch of interfaces, covering tile download, memory and storage persistence, rendering and navigating.
 It contains a robust implementation of some aspects and some utilities, providing a ready to use map base.
 
-[MainTest](https://github.com/DranikProgrammer/gdx-map/blob/master/core/src/main/java/com/dranikpg/gdxmap/MainTest.java)
-is an ApplicationAdapter which showcases the basic functionality.
+[MainTest](https://github.com/DranikProgrammer/gdx-map/blob/master/coreLat/Long and coord conversions, example update/src/main/java/com/dranikpg/gdxmap/MainTest.java)
+is an ApplicationAdapter which showcases the basic functionality. The rest of the project is **not** documented.
  
 Overview:
 

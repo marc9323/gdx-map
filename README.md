@@ -3,8 +3,7 @@
 The project is mainly based on a bunch of interfaces, covering tile download, memory and storage persistence, rendering and navigating.
 It contains a robust implementation of some aspects and some utilities, providing a ready to use map base.
 
-[MainTest](https://github.com/DranikProgrammer/gdx-map/blob/master/core/src/main/java/com/dranikpg/gdxmap/MainTest.java)
-is an ApplicationAdapter which showcases the basic functionality.
+[MainTest](https://github.com/DranikProgrammer/gdx-map/blob/master/core/src/main/java/com/dranikpg/gdxmap/MainTest.java)  is an ApplicationAdapter which showcases the basic functionality. The rest of the project is **not** documented and does **not** follow and design standarts.
  
 Overview:
 
@@ -22,7 +21,7 @@ The *TileProvider* is an interface for supplying *MapHolder*s with tiles. In gen
 as they might use a lot of resources(depends on the strategies, more on soon). MapHolders are utility objects which hold a position,
 a zoom level and update automatically on tile updates. *MapView* is a utility for navigating the map, smooth zooms and rendering. 
 The *TileProviderInfo* interface tells the TileProvider where to download the tiles, what boundaries and map sizes to expect.
-*OSMProviderInfo* is a ready to use implementation and is based on the OpenSteetMap project.
+*OSMProviderInfo* is a ready to use implementation which is based on the OpenSteetMap project.
 
 **GdxMapCodes** (responsible for generating tile codes) needs to be initialized by calling the static generate method. It generates bit masks based
 on the `MAX_COORD`(1e5) and  `MAX_LEVEL`(1e2) values. Two times `MAX_COORD` plus  `MAX_LEVEL` should **not exceed 1e18**.

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -42,6 +43,12 @@ public class MainTest extends ApplicationAdapter implements InputProcessor, MapE
 
     @Override
     public void create() {
+
+        /*
+           Use the keyboard for navigation.
+           -> ::keyDown
+         */
+
         // Generate bit masks for bitwise operations
         GdxMapCodes.generate();
         /*
@@ -82,13 +89,22 @@ public class MainTest extends ApplicationAdapter implements InputProcessor, MapE
         /* MapView keeps an internal framebuffer
             and managers rendering
         */
-        rd = new MapView(hd, b, 500, 500);
+        rd = new MapView(hd, b, 500, 500){
+            @Override
+            public void renderEnclave(Batch batch, OrthographicCamera cam, float w, float h) {
+                /*
+                    USE THIS FOR SYNCHRONIZED RENDERING
+                    dont forget to get pixel pos for tile coords hd::getPixelPos
+                 */
+            }
+        };
         Gdx.input.setInputProcessor(this);
 
         /*
          Fetch tile float coordinates for Athens with tilezoom 5
          */
         GeoUtil.getCoords(cd,37.983876,23.746900,5, hd.getGridSizeForLevel(5));
+
 
         Pixmap tmpm = new Pixmap(10,10,Pixmap.Format.RGBA4444);
         tmpm.setColor(Color.GOLDENROD);
@@ -116,6 +132,9 @@ public class MainTest extends ApplicationAdapter implements InputProcessor, MapE
         b.setProjectionMatrix(vp.getCamera().combined);
         b.begin();
         b.draw(r,0,0,vp.getScreenWidth(),vp.getScreenHeight());
+        /*
+            rd::renderEnclave is an alternative
+         */
         b.draw(t, cd2.x, cd2.y, 10,10);
         b.end();
     }

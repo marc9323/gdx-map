@@ -184,8 +184,14 @@ public class MapView implements TileRenderer, Disposable {
         b.draw(t,x,y,ts,ts);
     }
 
+
+    public void renderEnclave(Batch batch, OrthographicCamera cam, float w, float h){
+
+    }
+
     @Override
     public void end() {
+        renderEnclave(b,c, c.viewportWidth, c.viewportHeight);
         b.end();
         bf.end();
     }

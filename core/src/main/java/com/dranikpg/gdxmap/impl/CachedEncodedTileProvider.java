@@ -194,6 +194,11 @@ public class CachedEncodedTileProvider implements TileProvider, TileHandlerConne
     }
 
     @Override
+    public MapTile queryTile(long id) {
+        return tm.get(id);
+    }
+
+    @Override
     public void dispose() {
         for(MapTile t: tm.values())t.dispose();
     }

@@ -17,4 +17,6 @@ public interface TileHandlerConnection extends LoadListener {
 
     LongMap<MapTile> THgetTileMap();
 
+    MapTile queryTile(long id);
+
 }

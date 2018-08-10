@@ -128,20 +128,6 @@ public class MapHolder {
         return xs-dt <= x && x <= xe+dt && ys-dt <= y && y <= ye+dt;
     }
 
-    public void getTilePos(Vector2 t){
-        t.x = (int) cam.position.x/pv.tilesize();
-        t.y = (int) cam.position.y/pv.tilesize();
-        t.y = pv.gridsize(level) - t.y;
-    }
-
-    public void getTilePoswBase(Vector2 t, int base){
-        float sc =  POT.of(base-level)/cam.zoom;
-        t.x*=sc;
-        t.y*=sc;
-        t.x = cam.position.x/pv.tilesize();
-        t.y = cam.position.y/pv.tilesize() ;
-    }
-
     /*
         WITH FLOATS
      */
@@ -174,4 +160,9 @@ public class MapHolder {
     public int maxlevel() {
         return pv.maxlevel();
     }
+
+    public OrthographicCamera camera(){
+        return cam;
+    }
+
 }

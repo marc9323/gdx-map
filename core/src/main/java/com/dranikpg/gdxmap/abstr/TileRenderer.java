@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public interface TileRenderer {
 
+    //return MAX search depth
     int sizehint(int a);
 
     void begin(OrthographicCamera cam);

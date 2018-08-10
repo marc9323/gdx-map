@@ -117,6 +117,8 @@ public class CachedEncodedTileProvider implements TileProvider, TileHandlerConne
             readFromCache(t);
         }else if(load == GdxMapCodes.FETCH_INTERNET){
             fetchFromInternet(t);
+        }else{
+            t.cancelLoad();
         }
     }
 

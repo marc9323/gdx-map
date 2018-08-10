@@ -21,6 +21,8 @@ public class MapHolder {
 
     float vpfactor = 1.5f;
 
+    public boolean overdraw = false;
+
 
     public void provider(TileProvider pv) {
         this.pv = pv;
@@ -63,8 +65,13 @@ public class MapHolder {
                 int xt = x;
                 int yt = (gs-1-y);
 
-                if(xt < 0)xt = gs-Math.abs(xt);
-                if(xt >= gs) xt = xt%(gs);
+                if(overdraw){
+                    if(xt < 0)xt = gs-Math.abs(xt);
+                    if(xt >= gs) xt = xt%(gs);
+                }else{
+                    if(xt < 0 || xt >= gs)continue;
+                    if(yt < 0 || yt >= gs)continue;
+                }
 
                 r = pv.find(level,xt,yt,depth,load);
                 if(r != null) rd.render(r,x*ts,y*ts,ts);

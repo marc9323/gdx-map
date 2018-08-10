@@ -38,7 +38,6 @@ public class MainTest extends ApplicationAdapter implements InputProcessor, MapE
     Vector2 cd2 = new Vector2();
     Vector3 calc = new Vector3();
 
-
     Texture t;
 
     @Override
@@ -80,7 +79,7 @@ public class MainTest extends ApplicationAdapter implements InputProcessor, MapE
         CachedEncodedTileProvider pv = new CachedEncodedTileProvider(
                 this,
                 new LimitedBoundsEjectNetStrategy(3),
-                new LimitedBoundsEjectMemoryPersistence(500),
+                new LimitedBoundsEjectMemoryPersistence(1000),
                 new InstantWriteBytePersistence(Gdx.files.external("tmp/gdxmap")),
                 new OSMProviderInfo()
         );
@@ -126,8 +125,7 @@ public class MainTest extends ApplicationAdapter implements InputProcessor, MapE
         //project to screen
         hd.project(cd2,calc);
 
-        //System.out.println(cd2);
-
+        //System.out.println(rd.camera().position);
 
         b.setProjectionMatrix(vp.getCamera().combined);
         b.begin();
@@ -180,8 +178,9 @@ public class MainTest extends ApplicationAdapter implements InputProcessor, MapE
                 break;
             case Input.Keys.BACKSPACE:
                 Vector2 v = new Vector2();
-                GeoUtil.getTileCoords(v,7d,3d, 10, hd.getGridSizeForLevel(10));
-                rd.goal(v.x,v.y,10);
+                GeoUtil.getTileCoords(v,7d,3d, 7, hd.getGridSizeForLevel(7));
+
+                rd.goal(v.x,v.y,7);
                 break;
             case Input.Keys.ENTER:
                 double[] ar = hd.getGEO();

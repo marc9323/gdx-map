@@ -84,7 +84,7 @@ public class MapView implements TileRenderer, Disposable {
                 else if(level < hd.level()) zoom(zoomalpha);
             }
 
-            if( dist < 1f && hd.level() == level){
+            if( dist < 2f && hd.level() == level){
                 reached = true;
             }
 
@@ -124,7 +124,6 @@ public class MapView implements TileRenderer, Disposable {
     }
 
     public void move(float dx, float dy){
-
         c.translate(dx,dy);
         c.update();
     }
